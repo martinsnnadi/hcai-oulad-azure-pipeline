@@ -1,3 +1,4 @@
+<!--
 # Internship Milestone: Weeks 1–4 Scoping & Design Sign-off
 **Project Title:** Data Engineering for Human-centred AI Research  
 **Intern:** Martins Ifeanyi Nnadi  
@@ -40,3 +41,4 @@ The following structured questions have been prepared to guide our next supervis
 1.  **Bias Threshold Limits:** In our design architecture pack, I implemented a baseline 15% discrepancy limit on the Demographic Parity Difference for the `disability` attribute. Does this line up with your research benchmarks for OULAD learning analytics?
 2.  **Privacy Granularity:** When managing the daily Virtual Learning Environment (VLE) interaction logs, do you recommend storing raw daily timestamps, or should we aggregate them into weekly/modular totals to lower individual tracking vulnerabilities?
 3.  **Gold Layer Downstream Intent:** Is our target machine learning consumption model focused strictly on classification (predicting dropout risk) or will we need to design features that support clustering for behavioral student profiling?
+-->
