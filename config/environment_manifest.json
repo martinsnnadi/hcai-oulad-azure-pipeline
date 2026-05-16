@@ -14,6 +14,11 @@
       "name": "OULAD_DENG_Silver_Audited",
       "purpose": "Hashed, anonymised, and Fairlearn-vetted Delta tables",
       "governance_approval": "Professor Solomon Sunday Oyelere"
+    },
+    "gold_layer": {
+      "name": "OULAD_DENG_Gold_Curated",
+      "purpose": "Aggregated student feature matrices fully optimised for unbiased predictive modelling and Power BI reporting",
+      "downstream_consumers": "Data Scientists and Academic Researchers"
     }
   }
 }
