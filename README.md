@@ -4,4 +4,4 @@
 **Academic Supervisor:** Professor Solomon Sunday Oyelere  
 **Phase:** Weeks 1–4 Scoping and Design Deliverable  
 
-This repository tracks my data engineering internship project focused on building an ethical, privacy-preserving analytical pipeline using Microsoft Azure Fabric and the Open University Learning Analytics Dataset (OULAD). This work is conducted under the academic supervision and governance of Professor Solomon Sunday Oyelere, aligning with state-of-the-art research in learning analytics and responsible educational AI systems.
+This repository documents my data engineering internship project, which leveraged Microsoft Azure Fabric and the Open University Learning Analytics Dataset (OULAD) to create an ethical, privacy-preserving analytical pipeline. This effort, which is in line with cutting-edge research in learning analytics and responsible educational AI systems, is carried out under the academic supervision and control of Professor Solomon Sunday Oyelere.
