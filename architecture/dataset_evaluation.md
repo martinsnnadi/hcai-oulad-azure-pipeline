@@ -1,4 +1,3 @@
-<!--
 # **OULAD Dataset Evaluation & Strategic Scoping**  
 ### **Framework Category:** Data Governance & Portfolio Feasibility  
 ### **Project Context:** Data Engineering for Human‑Centred AI Research  
@@ -110,4 +109,3 @@ Modern organisations need engineers who understand:
 
 Implementing salted SHA‑256 tokenisation, metadata lineage tracking, and Fairlearn parity checks will set your portfolio apart.
 
--->
