@@ -7,10 +7,12 @@
 ---
 
 ## 1. Provenance & Lineage Strategy
-To ensure accountability, data transformations are strictly decoupled and tracked using Azure Fabric's native Medallion Lakehouse layout.
+Azure Fabric's native Medallion Lakehouse layout is used to carefully separate and track data transformations to guarantee accountability.
 * **Bronze (Raw Zone)**: Holds unmodified historical OULAD CSV files. Contains direct system identifiers (`id_student`). No analytical tooling or data scientists are granted read access here.
-* **Silver (Audited Zone)**: Holds hashed, joined, and demographic-parity-profiled tables.
+* **Silver (Audited Zone)**: Holds hashed, joined, and demographic-parity-profiled tables where student records undergo cryptographic de-identification.
+* **Gold (Curated Zone)**: Holds highly optimised semantic feature matrices and aggregated views. This is the only layer exposed to downstream AI training models and Power BI DirectLake dashboards to guarantee unbiased consumption.
 * **Metadata Tracking**: Every pipeline iteration appends the structural fields `ingestion_timestamp` and `pipeline_version` directly to the active schema to guarantee lineage tracking back to the source HTTP stream.
+
 
 ---
 
