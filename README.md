@@ -55,6 +55,8 @@ In Week 6, loose CSV formats were completely converted into high-performance, sy
 During Week 8 optimization sprints, a custom multi-table PySpark validation notebook was executed to audit total record volumes, index uniqueness, and lineage parameters. The validation query triggered a critical runtime failure:
 The audit revealed that our initial ingestion pipeline had completely omitted our mandatory HCAI lineage metadata parameters (`PIPELINE_INGEST_TS` and `SOURCE_FILE_NAME`). 
 
+---
+
 ### 4.2 Remediation via In-Flight Schema Evolution
 To resolve this without corrupting live data records or forcing an entire table tear-down, I utilized Delta Lake's native **Schema Migration** capability. By appending **`.option("overwriteSchema", "true")`** to our DataFrameWriter loops, the pipeline successfully executed an in-flight schema modification. This injected the system timestamps and explicit source identifiers (`studentInfo.csv` / `studentVle.csv`) directly into the Parquet layers:
 
@@ -66,12 +68,14 @@ df_repaired = df_raw.withColumn("PIPELINE_INGEST_TS", F.current_timestamp()) \
 df_repaired.write.mode("overwrite") \
                  .option("overwriteSchema", "true") \
                  .saveAsTable("studentinfo_bronze")
+---
 
 ### 4.3 DAMA-DMBOK Data Stewardship Mapping
 To bring this track up to global enterprise governance standards, official data accountability has been assigned under our root `GOVERNANCE.md` manifest:
 *   **Technical Custodian:** Martins Ifeanyi Nnadi (Pipeline maintenance and validation script deployment).
 *   **Academic Owner:** Professor Solomon Sunday Oyelere (Research governance, policy escalation, and ethical AI oversight).
 
+---
 
 ## 5. 📚 References
 
