@@ -53,9 +53,8 @@ In Week 6, loose CSV formats were completely converted into high-performance, sy
 
 ### 4.1 Programmatic Week 8 Audit Discovery
 During Week 8 optimization sprints, a custom multi-table PySpark validation notebook was executed to audit total record volumes, index uniqueness, and lineage parameters. The validation query triggered a critical runtime failure:
-The audit revealed that our initial ingestion pipeline had completely omitted our mandatory HCAI lineage metadata parameters (`PIPELINE_INGEST_TS` and `SOURCE_FILE_NAME`). 
 
----
+The audit revealed that our initial ingestion pipeline had completely omitted our mandatory HCAI lineage metadata parameters (`PIPELINE_INGEST_TS` and `SOURCE_FILE_NAME`). 
 
 ### 4.2 Remediation via In-Flight Schema Evolution
 To resolve this without corrupting live data records or forcing an entire table tear-down, I utilized Delta Lake's native **Schema Migration** capability. By appending **`.option("overwriteSchema", "true")`** to our DataFrameWriter loops, the pipeline successfully executed an in-flight schema modification. This injected the system timestamps and explicit source identifiers (`studentInfo.csv` / `studentVle.csv`) directly into the Parquet layers:
@@ -68,7 +67,7 @@ df_repaired = df_raw.withColumn("PIPELINE_INGEST_TS", F.current_timestamp()) \
 df_repaired.write.mode("overwrite") \
                  .option("overwriteSchema", "true") \
                  .saveAsTable("studentinfo_bronze")
----
+```
 
 ### 4.3 DAMA-DMBOK Data Stewardship Mapping
 To bring this track up to global enterprise governance standards, official data accountability has been assigned under our root `GOVERNANCE.md` manifest:
@@ -82,4 +81,4 @@ To bring this track up to global enterprise governance standards, official data 
 1.  Kuzilek, J., Hlosta, P. and Zdrahal, Z. (2017) 'Open University Learning Analytics Dataset', *Scientific Data*, 4(1), pp. 1-8.
 2.  Oyelere, S. S., et al. (2024) 'A Scoping Review of Hybrid Intelligence Systems for Human-Centred AI in Education', *Computers in Human Behavior*, 150, p. 107995.
 3.  Shneiderman, B. (2021) 'Human-Centered Artificial Intelligence: Reliable, Safe & Trustworthy', *International Journal of Human–Computer Interaction*, 37(6), pp. 479-491.
-4.  Armbrust, M., et al. (2020) 'Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores', *Proceedings of the VLDB Endowment*, 13(12), pp. 3411-3424.
+4.  Armbrust, M., et al. (2020) 'Delta Lake: High-Performance ACID Table Storage
