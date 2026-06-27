@@ -1,39 +1,44 @@
 # Human-Centred AI Data Governance Framework
-**Project:** Data Engineering for Human-centred AI Research  
-**Academic Supervisor:** Professor Solomon Sunday Oyelere  
-**Framework Status:** Active
+
+**Project**: Data Engineering for Human-Centred AI Research  
+**Supervisor**: Prof. Solomon Sunday Oyelere  
+**Status**: Active
+
 ---
 
 ## 1. Provenance & Lineage Strategy
-Azure Fabric's native Medallion Lakehouse layout is used to carefully separate and track data transformations to guarantee accountability.
-* **Bronze (Raw Zone)**: Holds unmodified historical OULAD CSV files. Contains direct system identifiers (`id_student`). No analytical tooling or data scientists are granted read access here.
-* **Silver (Audited Zone)**: Holds hashed, joined, and demographic-parity-profiled tables where student records undergo cryptographic de-identification.
-* **Gold (Curated Zone)**: Holds highly optimised semantic feature matrices and aggregated views. This is the only layer exposed to downstream AI training models and Power BI DirectLake dashboards to guarantee unbiased consumption.
-* **Metadata Tracking**: Every pipeline iteration appends the structural fields `ingestion_timestamp` and `pipeline_version` directly to the active schema to guarantee lineage tracking back to the source HTTP stream.
 
+Uses Azure Fabric's Medallion Lakehouse layout to isolate data states and ensure complete lineage accountability.
+*   **Bronze (Raw)**: Unmodified historical OULAD records with direct system IDs (`id_student`). Closed to analytical tools and data scientists.
+*   **Silver (Audited)**: Cryptographically de-identified, hashed, joined, and demographic-parity-profiled tables.
+*   **Gold (Curated)**: Optimised semantic feature matrices and aggregated views. Only layer accessible by downstream AI training and Power BI DirectLake dashboards.
+*   **Metadata Tracking**: Appends non-nullable `PIPELINE_INGEST_TS` and `SOURCE_FILE_NAME` lineage fields to active schemas to trace records back to source extraction events.
 
 ---
 
 ## 2. Versioning via Delta Lake Engine
-Data state drift is handled through **Delta Lake storage formats** inside Azure Fabric.
-* **Time Travel Capability**: All transformations are recorded in the Delta transaction log (`_delta_log`). This allows the research team to roll back schemas or query data matching the exact state of a prior date block.
-* **Code Version Alignment**: Pipeline logic modifications are tracked via main branch commits on GitHub, creating a 1:1 match between processing code and corresponding data table outputs.
+
+Manages data state drift and schema consistency natively inside Azure Fabric via Delta Lake.
+*   **Time Travel**: Transaction logging (`_delta_log`) records all changes, allowing the pipeline to roll back schemas or query precise historical data states.
+*   **Code Versioning**: Syncs processing code changes to main branch GitHub commits to maintain a 1:1 match between pipeline logic and data outputs.
 
 ---
 
 ## 3. Reproducibility Parameters
-To ensure research validity and pipeline replication:
-* **Deterministic Hashing**: Cryptographic anonymisation scripts utilise a static, repository-secured salt key to guarantee that a student ID translates to the exact same surrogate key across all relational table joins.
-* **Schema Enforcement**: Silver and Gold layers utilise strict schema locking to throw critical processing exceptions if data drift or corrupted column structures are detected during runtime.
+
+*   **Deterministic Hashing**: Cryptographic tokenisation uses a static, repository-secured salt key to ensure student IDs resolve to matching surrogate keys across relational table joins.
+*   **Schema Enforcement**: Applies strict schema structural locks in Silver and Gold layers to halt processing if runtime column drift or corrupted fields are detected.
 
 ---
 
 ## 4. Security and Privacy Boundaries
-* **Identity Protection**: High-risk identifiers (`id_student`) undergo salted SHA-256 tokenisation during the initial Bronze-to-Silver transition.
-* **Access Isolation**: Access control lists (ACLs) are configured to restrict model consumption zones. Downstream algorithms interact strictly with the anonymised features residing in the `OULAD_Gold_Curated` lakehouse workspace.
+
+*   **Identity Protection**: Salts and hashes high-risk identifiers (`id_student`) via SHA-256 during the initial Bronze-to-Silver transition layer.
+*   **Access Isolation**: Enforces explicit Cloud Access Control Lists (ACLs). Restricts downstream training models to anonymised features in the `OULAD_Gold_Curated` layer.
 
 ---
 
 ## 5. Documentation Lifecycle
-* **Live Cataloguing**: A central repository data dictionary acts as the single source of truth for attribute meanings, data types, and equity tracking categories.
-* **Pipeline Audit Trails**: All programmatic pipeline halts caused by demographic underrepresentation or severe bias variance trigger automated log notifications to the `Supervisor_Review_Audit_Log`.
+
+*   **Data Cataloguing**: Uses a central repository data dictionary to map attribute metadata, data types, and equity metrics.
+*   **Pipeline Audits**: Directs automated log notifications to `Supervisor_Review_Audit_Log` if underrepresentation or bias variance triggers a pipeline execution halt.
