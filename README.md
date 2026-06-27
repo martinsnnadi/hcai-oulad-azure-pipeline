@@ -49,10 +49,10 @@ Converted raw CSV files to optimised Delta Lake formats (`studentinfo_bronze` an
 ### 4.1 Automated Audit Discovery
 Week 8 PySpark validation notebook flagged a schema gap: the initial ingestion skipped mandatory lineage metadata fields.
 
-### 4.2 Fix via Schema Evolution
-Resolved the missing columns without dropping data by using Delta Lake's native migration engine. Appended `.option("overwriteSchema", "true")` to the write loop to inject timestamps and source file tags directly into the Parquet files.
+### 4.2 Remediation via In-Flight Schema Evolution
+To resolve this without corrupting live data records or forcing an entire table tear-down, I utilised Delta Lake's native schema evolution capabilities. By altering the table properties to support automatic schema merges, the pipeline injected the missing lineage parameters directly via Spark SQL:
 
-``sql
+```sql
 -- Step 1: Enable automatic schema evolution for the session
 SET spark.databricks.delta.schema.autoMerge.enabled = true;
 
@@ -82,3 +82,4 @@ Mapped accountability metrics under `GOVERNANCE.md`:
 2. Oyelere, S. S. et al. (2024) 'Hybrid Intelligence Systems for HCAI in Education', *Computers in Human Behavior*, 150.
 3. Shneiderman, B. (2021) 'Human-Centered Artificial Intelligence', *IJHCI*, 37(6).
 4. Armbrust, M. et al. (2020) 'Delta Lake ACID Table Storage', *VLDB*, 13(12).
+
