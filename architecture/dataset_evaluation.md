@@ -1,109 +1,72 @@
-# **OULAD Dataset Evaluation & Strategic Scoping**  
-### **Framework Category:** Data Governance & Portfolio Feasibility  
-### **Project Context:** Data Engineering for Human‑Centred AI Research  
-### **Academic Supervisor:** Professor Solomon Sunday Oyelere  
+# OULAD Dataset Evaluation & Strategic Scoping
+
+**Project**: Data Engineering for Human-Centred AI Research  
+**Supervisor**: Prof. Solomon Sunday Oyelere  
+**Status**: Completed Evaluation  
 
 ---
 
-## **1. Access and Licence**
+## 1. Access, Licensing & Volume Statistics
 
-### **The Baseline**  
-The Open University Learning Analytics Dataset (OULAD) is publicly available via the Open University’s Knowledge Media Institute (KMi) portal [1].
+Publicly sourced via the Open University’s Knowledge Media Institute (KMi) portal. Released under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license. 
 
-### **Licensing Frame**  
-The dataset is released under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license [1].
+The raw archive size evaluates to **~155 MB compressed (expanding to ~420 MB uncompressed text sheets)**. It contains no raw Personally Identifiable Information (PII), neutralizing GDPR compliance barriers for sandbox staging.
 
-### **Governance Mapping**  
-This open‑access license is ideal for public GitHub portfolios. It permits sharing, adapting, and transforming the data for research and commercial purposes, provided appropriate attribution is given to the Open University [1].
-
-Because the dataset contains **no raw Personally Identifiable Information (PII)**—no names, emails, phone numbers, or direct identifiers—it avoids complex GDPR/HIPAA compliance barriers for sandbox experimentation.
-
----
-
-## **2. Technical Richness**
-
-### **Schema Structure**  
-OULAD is not a single flat CSV. It is an **unnormalised relational schema** comprising seven interconnected tables [1]:
-- `courses`  
-- `assessments`  
-- `vle`  
-- `studentInfo`  
-- `studentRegistration`  
-- `studentAssessment`  
-- `studentVle`
-
-### **Scale and Diversity**  
-The dataset includes **10.6M+ clickstream interaction logs** inside `studentVle`, representing real behavioural telemetry [1].
-
-### **Engineering Opportunities**  
-Working with OULAD requires:
-- Multi‑table joins across relational structures
-- Complex window functions for aggregating daily logs into weekly behavioural trends
-- Synchronising discrete assessment events with continuous clickstream activity
-- Designing scalable pipelines using Azure Fabric’s Spark/Delta engine [4]
-
-This provides an enterprise‑grade engineering workout.
+### In-Depth Database Size & Row Metrics
+The relational footprint spans **7 interconnected CSV modules** with the following definitive inventory counts:
+*   `studentVle`: **10,655,280 rows** (Granular student clickstream interaction logs).
+*   `studentAssessment`: **173,912 rows** (Student module test results).
+*   `studentInfo`: **32,593 rows** (Core student demographic and registry snapshot table).
+*   `studentRegistration`: **32,593 rows** (Course onboarding and withdrawal timestamps).
+*   `vle`: **6,364 rows** (Virtual Learning Environment structural material resource catalog).
+*   `assessments`: **206 rows** (Module grading rule specifications).
+*   `courses`: **22 rows** (Module timeline metadata).
 
 ---
 
-## **3. Research Relevance**
+## 2. Technical Profile & Engineering Opportunities
 
-### **Human‑Centred Core**  
-The dataset aligns strongly with Professor Oyelere’s focus on hybrid intelligence and equitable educational systems [2]. It captures real student behaviours, engagement patterns, and academic outcomes.
-
-### **Ethical AI Grounding**  
-OULAD includes protected demographic attributes [1]:
-- gender  
-- region (socio‑economic proxy)  
-- age_band  
-- disability  
-
-This makes it a gold‑standard environment for studying **algorithmic fairness**, **predictive bias**, and **responsible AI** [3]. You can integrate tools like **Fairlearn** to ensure early‑dropout prediction models do not penalise vulnerable groups.
+OULAD forms an unnormalised relational star schema. Working with it enables advanced database pattern testing:
+*   **Relational Joins**: Linking high-volume activity tables to low-volume dimensional student snapshots via composite composite keys (`id_student`, `code_module`, `code_presentation`).
+*   **Window Functions**: Building PySpark partitions to aggregate millions of asynchronous daily rows into weekly behavioral vectors.
+*   **Time-Series Tracking**: Synchronizing discrete assignment deadline events against continuous, irregular click streams.
+*   **Medallion Engineering**: Transforming loose flat CSV files into high-performance, managed Delta Lake tables inside Azure Fabric [4].
 
 ---
 
-## **4. Data Quality Challenges**
+## 3. Research Relevance & Ethical AI Grounding
 
-Real‑world data is messy, and OULAD provides authentic engineering challenges:
+Directly supports Prof. Oyelere’s focus on hybrid intelligence systems and equitable educational technology. The dataset contains vital protected identity traits to run **algorithmic fairness, predictive bias, and responsible AI** audits:
+*   `gender` (Biological profile).
+*   `disability` (Medical registration status).
+*   `age_band` (Generational assignment classification).
+*   `imd_band` (Index of Multiple Deprivation regional socio-economic proxy).
 
-### **Severe Missing Data / Null Values**  
-- `date_unregistration` is sparse (only populated for dropouts).  
-- `imd_band` (socio‑economic deprivation index) contains missing values.
-
-### **Severe Class Imbalances**  
-Students with disabilities represent ~10% of the dataset [1], creating underrepresentation risks that must be audited in the pipeline before modeling.
-
-### **Asynchronous Time‑Series Alignment**  
-Click logs use **relative day offsets** (e.g., Day −30 to Day 269) rather than calendar dates [1]. Your pipeline must normalise these offsets consistently.
+These fields let us integrate **Fairlearn** checkpoints in the Silver layer, ensuring early-dropout prediction models don't auto-penalize vulnerable student cohorts.
 
 ---
 
-## **5. Portfolio Value**
+## 4. Data Quality Challenges (The Mitigation Strategy)
 
-This dataset will **absolutely** demonstrate elite, highly employable data‑engineering capability. Recruiters are tired of seeing Titanic/Iris. OULAD shows you can operate at a **production‑grade level**:
-
-### **Enterprise Architecture**  
-You will implement a **Medallion Lakehouse Pattern** (Bronze → Silver → Gold) using Microsoft Fabric’s Spark/Delta engine [4].
-
-### **Advanced Data Patterns**  
-You will demonstrate:
-- Handling complex relational schemas
-- Transforming millions of messy log events
-- Engineering analytical feature vectors at scale
-
-### **The HCAI Premium**  
-Modern organisations need engineers who understand:
-- Data ethics
-- Privacy engineering
-- Compliance
-- Bias auditing
-
-Implementing salted SHA‑256 tokenisation, metadata lineage tracking, and Fairlearn parity checks will set your portfolio apart.
+OULAD contains major real-world data tracking errors that the pipeline must catch and mitigate:
+*   **Sparse / Null Values**: `date_unregistration` is left blank for completing students; `imd_band` contains unpopulated cells. Checked via custom null-parsing metrics.
+*   **Class Imbalance**: Students with a documented disability represent only **~10% of the active cohort**. Handled via programmatic fairness screening to prevent model underrepresentation bias.
+*   **Asynchronous Timestamps**: Interaction events use relative day offsets (Day -30 up to Day 269) relative to module starts. Fixed by building normalized epoch metrics during ingestion.
 
 ---
 
-## **📚 References**
-[1] Kuzilek, J., Hlosta, P. and Zdrahal, Z. (2017) 'Open University Learning Analytics Dataset', *Scientific Data*, 4(1), pp. 1-8. Available at: https://open.ac.uk (Accessed: 29 May 2026).  
-[2] Oyelere, S. S., et al. (2024) 'A Scoping Review of Hybrid Intelligence Systems for Human-Centred AI in Education', *Computers in Human Behavior*, 150, p. 107995.  
-[3] Shneiderman, B. (2021) 'Human-Centered Artificial Intelligence: Reliable, Safe & Trustworthy', *International Journal of Human–Computer Interaction*, 37(6), pp. 479-491.  
-[4] Armbrust, M., et al. (2020) 'Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores', *Proceedings of the VLDB Endowment*, 13(12), pp. 3411-3424.
+## 5. Portfolio & Architectural Value
+
+Proves production-grade, enterprise-ready cloud data warehousing capabilities:
+*   **Architecture**: Deploys a full Medallion layout (Bronze → Silver → Gold) entirely inside Microsoft Fabric.
+*   **Advanced Patterns**: Builds real-world big-data transforms, structural data type locks (`StructType`), and feature aggregation layers at scale.
+*   **HCAI Frameworks**: Integrates salted SHA-256 tokenization, metadata data lineage logging, and Fairlearn parity auditing loops.
+
+---
+
+## 6. References
+
+1. Kuzilek, J., Hlosta, P. and Zdrahal, Z. (2017) 'Open University Learning Analytics Dataset', *Scientific Data*, 4(1).
+2. Oyelere, S. S., et al. (2024) 'A Scoping Review of Hybrid Intelligence Systems for Human-Centred AI in Education', *Computers in Human Behavior*, 150.
+3. Shneiderman, B. (2021) 'Human-Centered Artificial Intelligence: Reliable, Safe & Trustworthy', *IJHCI*, 37(6).
+4. Armbrust, M., et al. (2020) 'Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores', *VLDB*, 13(12).
