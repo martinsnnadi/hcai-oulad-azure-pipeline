@@ -1,48 +1,45 @@
 # Internship Milestone: Weeks 1–4 Scoping & Design Sign-off
-**Project Title:** Data Engineering for Human-centred AI Research  
-**Intern:** Martins Ifeanyi Nnadi  
-**Academic Supervisor:** Professor Solomon Sunday Oyelere  
-**Framework Horizon:** 24-Week Structured Research & Development Timeline
+
+**Project**: Data Engineering for Human-Centred AI Research  
+**Intern**: Martins Ifeanyi Nnadi  
+**Supervisor**: Prof. Solomon Sunday Oyelere  
+**Horizon**: 24-Week Parallel Processing Research Roadmap
 
 ---
 
 ## 1. Personal Development Goals Note (One-Page Summary)
 
-My technical, ethical, and research objectives for this 24-week academic supervision internship are structured around my existing multi-cloud skillset—bridging my Microsoft Fabric Data Engineer Associate (DP-600) certification, AWS/Snowflake bootcamp tracks, and Human-Centred AI (HCAI) engineering:
+Technical, ethical, and research objectives leveraging Microsoft Fabric (DP-600), AWS/Snowflake bootcamp proficiencies, and HCAI engineering design principles:
 
 *   **Goal 1: Advanced Medallion Architecture Implementation (Technical)**
-    *   *Objective:* Design and provision fully segregated Bronze, Silver, and Gold lakehouse environments within the Azure Fabric workspace to isolate raw, unvetted education datasets from downstream machine learning consumers.
+    *   *Objective*: Provision decoupled Bronze, Silver, and Gold lakehouses in Azure Fabric to isolate raw historical datasets from machine learning consumers.
 *   **Goal 2: Complex Data Profiling & Time-Series Wrangling (Analytical)**
-    *   *Objective:* Programmatically transform, clean, and resolve anomalies within the Open University Learning Analytics Dataset (OULAD). I will write PySpark window functions to compress 10.6 million asynchronous clickstream log entries into uniform, weekly analytical feature layers.
+    *   *Objective*: Use PySpark window functions to aggregate 10.6M+ asynchronous clickstream entries from OULAD into weekly analytical feature layers.
 *   **Goal 3: Cryptographic Privacy & Security Engineering (Security)**
-    *   *Objective:* Enforce data-at-rest anonymisation by developing a deterministic, salted SHA-256 tokenisation pipeline over primary student keys (`id_student`), hiding secret environment salts to eliminate individual re-identification vulnerabilities.
+    *   *Objective*: Deploy deterministic, salted SHA-256 tokenisation over primary student keys (`id_student`), isolating secret environment salts to eliminate re-identification.
 *   **Goal 4: Algorithmic Equity Auditing & Data Governance (Ethical)**
-    *   *Objective:* Master the operational integration of the `Fairlearn` toolkit. I will hardcode automated pipeline validation blocks checking historical Demographic Parity Differences across protected student cohorts (such as disability and age groups).
-*   **Goal 5: Multi-Cloud Integration & Code-to-Data Alignment (Professional)**
-    *   *Objective:* Establish 1:1 version control alignment by injecting GitHub commit hashes directly into Delta Lake transaction logs (`_delta_log`), maintaining a reproducible, auditable open-science workflow while cross-referencing cloud design patterns learned via AWS/Snowflake.
+    *   *Objective*: Integrate the `Fairlearn` toolkit. Hardcode pipeline execution checks to monitor Demographic Parity Differences across disability and age cohorts.
+*   **Goal 5: Multi-Cloud Integration & Reproducibility (Professional)**
+    *   *Objective*: Inject GitHub commit hashes into Delta transaction logs (`_delta_log`) for 1:1 code-to-data alignment while cross-referencing AWS/Snowflake pipeline patterns.
 
 ---
 
 ## 2. Working Environment & Access Ledger
 
 ### 2.1 Confirmed Environment Status
-*   **Version Control Workspace:** Active public GitHub cloud repository (`hcai-oulad-azure-pipeline`) fully initialized with explicit directory routing (`architecture/`, `notebooks/`, `config/`).
-*   **Cloud Processing Workspace:** Microsoft Azure Fabric corporate workspace `OULAD_DENG_HCAI_Analytics` established.
-*   **Storage Framework:** Complete 3-tier Medallion architecture successfully provisioned as decoupled infrastructure points:
-    1. `OULAD_DENG_Bronze_Raw` (Immutable append-only landing zone for education CSV tables).
-    2. `OULAD_DENG_Silver_Audited` (Anonymised, joined, and fairness-vetted Delta tables).
-    3. `OULAD_DENG_Gold_Curated` (Aggregated, semantic student feature matrices optimized for unbiased Power BI reporting and AI consumption).
+*   **Version Control**: Active GitHub cloud repository (`hcai-oulad-azure-pipeline`) with standard directories (`architecture/`, `notebooks/`, `config/`).
+*   **Cloud Processing**: Microsoft Azure Fabric corporate workspace `OULAD_DENG_HCAI_Analytics` operational.
+*   **Storage Infrastructure**: Provisioned 3-tier Medallion architecture:
+    1.  `OULAD_DENG_Bronze_Raw` (Immutable append-only CSV landing zone).
+    2.  `OULAD_DENG_Silver_Audited` (Anonymised, joined, and fairness-vetted Delta tables).
+    3.  `OULAD_DENG_Gold_Curated` (Aggregated student feature matrices optimised for unbiased Power BI and AI model consumption).
 
 ### 2.2 Active Access Issues & Blockers Ledger
-*   *Issue 1 (Fabric Capacity Migration):* Direct PySpark notebook compute allocation is running on a temporary cloud trial tier. We must schedule a migration roadmap to a stable research capacity before the 60-day trial window expires to maintain runtime integrity.
-*   *Issue 2 (Cross-Organisational Access Blocker):* Microsoft Azure Fabric tenant policies currently block external domain invitations. Because Professor Oyelere is an external collaborator, the platform prevents adding his institutional account directly to the workspace Access Control List (ACL) as a Viewer. 
+*   *Issue 1 (Fabric Capacity Migration)*: PySpark notebook compute running on a temporary cloud trial tier. Requires migration to a stable research capacity before the 60-day window expires.
+*   *Issue 2 (Cross-Organisational Access Blocker)*: Fabric tenant policies block external domain invitations. The platform prevents adding Prof. Oyelere's institutional account directly to the workspace ACL.
 
 ---
 
 ## 3. Supervision Agenda Question (For Professor Oyelere)
 
-To ensure our cloud storage schemas are correctly configured before we begin active data ingestion in Week 5, I have narrowed our design focus down to one foundational question regarding student privacy:
-
-1. **Clickstream Privacy Granularity**: The raw OULAD data tracks highly specific, daily student click interactions. To protect student identities and prevent vulnerabilities related to individual behaviour tracking, do you prefer that our pipeline aggregate these logs into uniform weekly totals during processing, or should we ingest the raw daily intervals exactly as they are?
-
-
+1. **Clickstream Privacy Granularity**: The raw OULAD data tracks specific daily student click interactions. To protect user identities and mitigate individual tracking risks, do you prefer the pipeline aggregate these logs into weekly totals during processing, or should we ingest the raw daily intervals as-is?
