@@ -1,10 +1,9 @@
-# 🎓 OULAD Ingestion Pipeline
+# OULAD Ingestion Pipeline
 ### HCAI Data Track | Azure Fabric (DP-600)
 
 **Supervisor:** Prof. Solomon Sunday Oyelere  
 **Milestone:** Week 8 (Bronze Validation & Schema Migration)
 
----
 
 ## 1. Project & Dataset Review
 
@@ -20,7 +19,6 @@ Automated, secure ingestion infrastructure for the Open University Learning Anal
 *   **Algorithmic Bias**: Unvetted historical dropout models penalize lower socio-economic or disabled student groups. Silver layer uses Fairlearn to block Demographic Parity Differences over 15%.
 *   **Re-identification Risk**: Demographic combinations and daily click frequencies create a behavioral fingerprint. Solved by separating layers into decoupled cloud storage.
 
----
 
 ## 2. Infrastructure Breakthroughs (Weeks 5-6)
 
@@ -32,7 +30,6 @@ Automated, secure ingestion infrastructure for the Open University Learning Anal
 *   **Issue**: Target server firewall blocked automated Azure data centre IP ranges, throwing `Errno 111 Connection Refused`.
 *   **Fix**: Refactored notebook code to use a custom corporate user-agent header string with Python `requests`, bypassing the proxy firewall block.
 
----
 
 ## 3. Cloud Storage & Managed Delta Tables
 
@@ -42,7 +39,6 @@ Data resides in the `OULAD_Bronze_Raw` Lakehouse. Raw file downloads land in the
 ### 3.2 Delta Table Optimisation
 Converted raw CSV files to optimised Delta Lake formats (`studentinfo_bronze` and `studentvle_bronze`). Applied explicit PySpark `StructType` schema structures, locked down data types (`id_student` as Integer), and enabled ACID transactions (`_delta_log`) to prevent drift.
 
----
 
 ## 4. Week 8 Quality Validation & Schema Evolution
 
@@ -74,7 +70,6 @@ Mapped accountability metrics under `GOVERNANCE.md`:
 *   **Technical Custodian**: Martins Ifeanyi Nnadi (Pipeline upkeep and validation scripts).
 *   **Academic Owner**: Prof. Solomon Sunday Oyelere (Research governance, policy escalation).
 
----
 
 ## 5. References
 
